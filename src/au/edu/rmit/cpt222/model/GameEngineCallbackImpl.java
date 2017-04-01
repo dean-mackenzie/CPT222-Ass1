@@ -1,6 +1,5 @@
 package au.edu.rmit.cpt222.model;
 
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,9 +10,7 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 
 public class GameEngineCallbackImpl implements GameEngineCallback {
-	
-	private DicePair result = new DicePairImpl();
-	private int houseRoll;
+	private DicePair result;
 	
 	//TODO: public class GUICallbackImpl extends GameEngineCallbackImpl
 	//This class will be a controller for the GUI - basically a specialised version of this for the GUI
@@ -28,14 +25,21 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		this.logger.log(Level.INFO, "Game result: " + player.getPlayerName()
 				+ " has " + result);
 	}
+	
+	// Returns the house roll as a score
+	public int getHouseRoll() {
+		return result.getTotalScore();
+	}
 
-	//TODO: refer to dice and dicepair
 	public void houseRoll(DicePair dicePair, GameEngine engine) {
-		// Get the house total score (dice already initalised)
-		houseRoll = dicePair.getTotalScore();
+		// Set the result dice to parameter
+		result = dicePair;
 				
 		//TODO: Update view to show mapped images in view
 			//code here
+		
+		//TODO: this is just temp logging to show each intermediate roll
+		System.out.println("House roll is: " + result.getTotalScore());
 	}
 	
 	public void houseRollOutcome(DicePair result, GameEngine engine) {
@@ -48,11 +52,13 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	// Looping is done in GameEngineImpl - so this is a single "roll"
 	public void playerRoll(Player player, DicePair dicePair, GameEngine engine) {
 		//TODO: Update view to show mapped images in GUI
-			//code here
+			
+		//TODO: this is just temp logging to show each intermediate roll
+		System.out.println("Player roll is: " + dicePair.getTotalScore());
 		
 		// Set current roll result (only final one will be used)
 		player.setRollResult(dicePair);
-
+		
 	}
 	
 	//This is for the "final" roll (i.e. the player's roll)
@@ -68,9 +74,4 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		//TODO: Return result to view
 
 	}
-	
-	public int getHouseRoll() {
-		return houseRoll;
-	}
-
 }
