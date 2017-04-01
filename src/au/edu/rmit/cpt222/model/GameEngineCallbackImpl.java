@@ -31,16 +31,11 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 
 	//TODO: refer to dice and dicepair
 	public void houseRoll(DicePair dicePair, GameEngine engine) {
-		// Roll the dicepair
-		dicePair.getDice1().setFace(dicePair.getDice1().getFace());
-		dicePair.getDice2().setFace(dicePair.getDice2().getFace());
-		
+		// Get the house total score (dice already initalised)
 		houseRoll = dicePair.getTotalScore();
 				
 		//TODO: Update view to show mapped images in view
 			//code here
-		((GameEngineImpl) engine).setPair(dicePair);
-		
 	}
 	
 	public void houseRollOutcome(DicePair result, GameEngine engine) {
@@ -48,15 +43,10 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		this.logger.log(Level.INFO, "House rolled: " + result.getTotalScore());
 		
 		//TODO: anything else?
-
 	}
 	
 	// Looping is done in GameEngineImpl - so this is a single "roll"
 	public void playerRoll(Player player, DicePair dicePair, GameEngine engine) {
-		// Roll the dicepair
-		dicePair.getDice1().setFace(dicePair.getDice1().getFace());
-		dicePair.getDice2().setFace(dicePair.getDice2().getFace());
-				
 		//TODO: Update view to show mapped images in GUI
 			//code here
 		

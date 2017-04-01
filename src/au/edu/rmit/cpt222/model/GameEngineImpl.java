@@ -138,6 +138,9 @@ public class GameEngineImpl implements GameEngine {
 		// This is the intermediate rolling
 		for (GameEngineCallback callbacks : callbacks) {
 			System.out.println("Rolling dice for player...");
+			
+			// You don't need pair, but you could use this to update the GUI
+			// which will show the actual numbers
 			for(int i = 0; i < FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Handles GUI animation
 				pair = new DicePairImpl();
