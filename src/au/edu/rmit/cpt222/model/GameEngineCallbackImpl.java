@@ -17,16 +17,12 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	
 	protected Logger logger = Logger.getLogger("Test");
 
-	/**
-	 * Called for each Player to indicate the outcome of the current game. Use
-	 * this to update your GUI display or log to console.
-	 */
 	public void gameResult(Player player, GameStatus result, GameEngine engine) {
 		this.logger.log(Level.INFO, "Game result: " + player.getPlayerName()
 				+ " has " + result);
 	}
 	
-	// Returns the house roll as a score
+	// Returns house roll as a score
 	public int getHouseRoll() {
 		return result.getTotalScore();
 	}
@@ -43,17 +39,16 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	}
 	
 	public void houseRollOutcome(DicePair result, GameEngine engine) {
-		//Log result
-		this.logger.log(Level.INFO, "House rolled: " + result.getTotalScore());
+		// TODO: Update view to show mapped images in GUI(?)
 		
-		//TODO: anything else?
+		// Log result
+		this.logger.log(Level.INFO, "House has rolled: " + result.getTotalScore());
 	}
 	
-	// Looping is done in GameEngineImpl - so this is a single "roll"
 	public void playerRoll(Player player, DicePair dicePair, GameEngine engine) {
-		//TODO: Update view to show mapped images in GUI
+		//TODO: Update view to show mapped images in GUI(?)
 			
-		//TODO: this is just temp logging to show each intermediate roll
+		// Log intermediate roll
 		System.out.println("Player roll is: " + dicePair.getTotalScore());
 		
 		// Set current roll result (only final one will be used)
@@ -63,13 +58,9 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	
 	//This is for the "final" roll (i.e. the player's roll)
 	public void playerRollOutcome(Player player, DicePair result, GameEngine engine) {
-		//TODO: this doesn't use result?
-		
-		//Result of final roll should have been set in player.setRollResult() (above)
-		int res = player.getRollResult().getTotalScore();
-		
+		// Log final roll outcome
 		this.logger.log(Level.INFO, "Player: " + player.getPlayerName()
-		+ " has rolled " + res);
+		+ " has rolled " + result.getTotalScore());
 
 		//TODO: Return result to view
 

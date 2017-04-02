@@ -9,7 +9,7 @@ public class DiceImpl implements Dice  {
 	private int face;
 	
 	public DiceImpl(){
-		face = ThreadLocalRandom.current().nextInt(1, 5 + 1);
+		face = ThreadLocalRandom.current().nextInt(1, 7);
 	}
 	
 	public int getFace() {

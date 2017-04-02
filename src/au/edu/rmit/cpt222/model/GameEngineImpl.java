@@ -24,7 +24,8 @@ public class GameEngineImpl implements GameEngine {
 	
 	//ConcurrentHashMap is a better choice for multi-player/threaded
 	private Map<String, Player> players = new HashMap<String, Player>(); 
-	private DicePair pair;
+	private DicePair playerDice;
+	private DicePair houseDice;
 	
 	private Set<GameEngineCallback> callbacks = Collections.
 			newSetFromMap(new HashMap<GameEngineCallback, Boolean>());
@@ -51,7 +52,7 @@ public class GameEngineImpl implements GameEngine {
 			
 			for (Player player : players.values()) {
 				// Compare rolls, set result and add/subtract points
-				if (((GameEngineCallbackImpl) callbacks).getHouseRoll() > player.getRollResult().getTotalScore()) {
+				if (houseDice.getTotalScore() > player.getRollResult().getTotalScore()) {
 					GameStatus status = GameEngine.GameStatus.LOST;					
 					player.setGameResult(status);
 					
@@ -59,7 +60,7 @@ public class GameEngineImpl implements GameEngine {
 					int points = player.getPoints() - player.getBet();
 					player.setPoints(points);
 				}
-				else if (((GameEngineCallbackImpl) callbacks).getHouseRoll() == player.getRollResult().getTotalScore()) {
+				else if (houseDice.getTotalScore() == player.getRollResult().getTotalScore()) {
 					GameStatus status = GameEngine.GameStatus.DREW;					
 					player.setGameResult(status);
 					
@@ -126,10 +127,10 @@ public class GameEngineImpl implements GameEngine {
 		for (GameEngineCallback callbacks : callbacks) {
 			for(int i = initialDelay; i < finalDelay; i = i+delayIncrement) {
 				// Handles GUI animation
-				pair = new DicePairImpl();
-				callbacks.houseRoll(pair, this);
+				houseDice = new DicePairImpl();
+				callbacks.houseRoll(houseDice, this);
 			}
-			callbacks.houseRollOutcome(pair, this);
+			callbacks.houseRollOutcome(houseDice, this);
 		}
 	}
 	
@@ -150,8 +151,8 @@ public class GameEngineImpl implements GameEngine {
 			// which will show the actual numbers
 			for(int i = 0; i < FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Handles GUI animation
-				pair = new DicePairImpl();
-				callbacks.playerRoll(player, pair, this);
+				playerDice = new DicePairImpl();
+				callbacks.playerRoll(player, playerDice, this);
 				try {
 					Thread.sleep(DELAY_INCREMENT);
 				} catch (InterruptedException e) {
