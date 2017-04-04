@@ -52,6 +52,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		System.out.println("Player roll is: " + dicePair.getTotalScore());
 		
 		// Set current roll result (only final one will be used)
+		// TODO: shouldn't this be in playerRollOutcome???
 		player.setRollResult(dicePair);
 		
 	}
@@ -63,6 +64,5 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		+ " has rolled " + result.getTotalScore());
 
 		//TODO: Return result to view
-
 	}
 }
