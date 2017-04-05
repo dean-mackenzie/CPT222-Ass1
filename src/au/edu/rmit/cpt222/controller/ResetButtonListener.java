@@ -7,15 +7,13 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngine;
 import au.edu.rmit.cpt222.view.MainWindow;
 
 public class ResetButtonListener implements ActionListener {
-	   MainWindow window;
-	   GameEngine gameEngine;
+	   private MainWindow window;
 			   
-	   public ResetButtonListener(MainWindow window, GameEngine gameEngine)
+	   public ResetButtonListener(MainWindow window)
 	   {
 		      super();
 		      this.window = window;
-		      this.gameEngine = gameEngine;
-		   }
+	   }
 
 	   @Override
 	   public void actionPerformed(ActionEvent arg0)

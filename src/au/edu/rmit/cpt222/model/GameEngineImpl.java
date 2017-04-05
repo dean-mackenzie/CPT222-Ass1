@@ -24,7 +24,6 @@ public class GameEngineImpl implements GameEngine {
 	private Map<String, Player> players = new HashMap<String, Player>(); 
 	private DicePair playerDice;
 	private DicePair houseDice;
-	
 	private Set<GameEngineCallback> callbacks = Collections.
 			newSetFromMap(new HashMap<GameEngineCallback, Boolean>());
 	
@@ -89,20 +88,28 @@ public class GameEngineImpl implements GameEngine {
 	}
 	
 	public void placeBet(Player player, int betPoints) throws InsufficientFundsException {
-		try {
+	//	try {
 			Player playerToBet = getPlayer(player.getPlayerId());
 			
 			//Check if enough points to bet, then place bet
+			
 			if (betPoints > playerToBet.getPoints()) {
 				throw new InsufficientFundsException();
+			}
+			else if (betPoints < 1) {
+				throw new IllegalArgumentException();
 			}
 			else {
 				playerToBet.placeBet(betPoints);
 			}
-		} catch (InsufficientFundsException e) {
-			//TODO: Not sure just throw this up stack for Client to catch and act on
-			;
-		}
+		//TODO: just throw exceptions back up to be handled elsewhere?
+//		} catch (InsufficientFundsException e) {
+//			;
+//		} catch (IllegalArgumentException e) {
+//			;
+//		}
+		
+		
 	}
 
 	public void removeGameEngineCallback(GameEngineCallback gameEngineCallback) {
@@ -111,7 +118,7 @@ public class GameEngineImpl implements GameEngine {
 
 	public boolean removePlayer(Player player) {
 		try {
-			players.remove(player);
+			players.remove(player.getPlayerId());
 			return true;
 		}
 		catch (NullPointerException e) {

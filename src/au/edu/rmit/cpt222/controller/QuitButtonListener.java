@@ -6,19 +6,18 @@ import java.awt.event.ActionListener;
 import au.edu.rmit.cpt222.view.MainWindow;
 
 public class QuitButtonListener implements ActionListener {
-	   MainWindow window;
+	   private MainWindow mw;
 			   
-	   public QuitButtonListener(MainWindow window)
+	   public QuitButtonListener(MainWindow mw)
 	   {
-	      super();
-	      this.window = window;
+	      this.mw = mw;
 	   }
 
 	   @Override
 	   public void actionPerformed(ActionEvent arg0)
 	   {
-		   window.setVisible(false);
-		   window.dispose();
+		   mw.setVisible(false);
+		   mw.dispose();
 	   }
   
 	   
