@@ -86,8 +86,13 @@ public class SimplePlayer implements Player {
 	}
 	
 	public String toString() {
-		String playerDetails = (getPlayerId() + " : " + getPlayerName() 
-			+ " : " + getPoints());
+		String playerDetails = ("Player: id= " + this.getPlayerId() 
+			+ ", name= " + this.getPlayerName() + ", bet amount= " + this.getBet() 
+			+ ", roll result = Dice 1: " + this.getRollResult().getDice1().getFace()
+			+ ", Dice 2: " + this.getRollResult().getDice2().getFace()
+			+ " ... Total: " + this.getRollResult().getTotalScore()
+			+ ", game outcome = " + this.getGameResult()
+			+ ", total credit points= " + this.getPoints());
 		return playerDetails;
 	}
 	

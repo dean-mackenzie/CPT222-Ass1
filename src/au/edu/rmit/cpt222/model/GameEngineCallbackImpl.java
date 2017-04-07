@@ -31,20 +31,24 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		// Set the result dice to parameter
 		result = dicePair;
 		
-		//TODO: this is temp logging to show intermediate rolls
-		System.out.println("House roll is: " + result.getTotalScore());
+		//Log intermediate roll
+		this.logger.log(Level.INFO, "Player: House, intermediate roll= Dice 1: " 
+			+ dicePair.getDice1().getFace() + ", Dice 2: " + dicePair.getDice2().getFace()  
+			+  " ... Total: " + dicePair.getTotalScore());
 	}
 	
 	public void houseRollOutcome(DicePair result, GameEngine engine) {
-		// TODO: Update view to show mapped images in GUI(?)
-		
 		// Log result
-		this.logger.log(Level.INFO, "House has rolled: " + result.getTotalScore());
+		this.logger.log(Level.INFO, "Player: House, final roll state= Dice 1: "
+			+ result.getDice1().getFace() + ", Dice 2: " + result.getDice1().getFace()
+			+ " ... Total: " + result.getTotalScore());
 	}
 	
 	public void playerRoll(Player player, DicePair dicePair, GameEngine engine) {
 		// Log intermediate roll
-		System.out.println("Roll for " + player.getPlayerName() + " is: " + dicePair.getTotalScore());
+		this.logger.log(Level.INFO, "Player: " + player.getPlayerName() + ", intermediate roll= Dice 1: " 
+			+ dicePair.getDice1().getFace() + ", Dice 2: " + dicePair.getDice2().getFace()  
+			+  " ... Total: " + dicePair.getTotalScore());
 		
 		// Set current roll result (only final one will be used)
 		player.setRollResult(dicePair);
@@ -53,9 +57,9 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	//This is for the "final" roll (i.e. the player's roll)
 	public void playerRollOutcome(Player player, DicePair result, GameEngine engine) {
 		// Log final roll outcome
-		this.logger.log(Level.INFO, "Player: " + player.getPlayerName()
-		+ " has rolled " + result.getTotalScore());
-
-		//TODO: Return result to view
+		this.logger.log(Level.INFO, "Player: " + player.getPlayerName() 
+			+ ", final roll state= Dice 1: " + result.getDice1().getFace() 
+			+ ", Dice 2: " + result.getDice2().getFace()  
+			+  " ... Total: " + result.getTotalScore());
 	}
 }

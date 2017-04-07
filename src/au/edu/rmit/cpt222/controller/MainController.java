@@ -57,18 +57,10 @@ public class MainController {
 		
 		return true;
 	}
-	
-	public void placeBet() {
 		
-	}
-	
-	
-	
 	// Methods to update view
-	public void updateRollArea(int dice1, int dice2) {
-		System.out.println("In controller - updating player dice");
-		//then call subcomponent to update view
-		this.mw.updateRollPanel(dice1, dice2);
+	public void updateRollArea(String rollType, int dice1, int dice2) {
+		this.mw.updateRollPanel(rollType, dice1, dice2);
 	}
 	
 	public List<String> getPlayerNames() {

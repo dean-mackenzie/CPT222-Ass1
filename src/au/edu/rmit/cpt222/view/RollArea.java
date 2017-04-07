@@ -40,13 +40,13 @@ public class RollArea extends JPanel {
 		rightDice.add(houseDice2);
 	}
 	
-	public void updatePlayerDice1(int dice) {
-		playerDice1.setText(Integer.toString(dice));
+	public void updatePlayerDice(int dice1, int dice2) {
+		playerDice1.setText(Integer.toString(dice1));
+		playerDice2.setText(Integer.toString(dice2));
 	}
 	
-	public void updatePlayerDice2(int dice) {
-		playerDice2.setText(Integer.toString(dice));
+	public void updateHouseDice(int dice1, int dice2) {
+		houseDice1.setText(Integer.toString(dice1));
+		houseDice2.setText(Integer.toString(dice2));
 	}
-
-
 }

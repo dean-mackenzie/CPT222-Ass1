@@ -128,12 +128,18 @@ public class GameEngineImpl implements GameEngine {
 	
 	public void rollHouse(int initialDelay, int finalDelay, int delayIncrement) {
 		// As per rollPlayer (minus player)
-		System.out.println("Rolling dice for house...");
 		for (GameEngineCallback callback : this.callbacks) {
-			for(int i = initialDelay; i < finalDelay; i = i+delayIncrement) {
+			for(int i = 0; i < FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Handles GUI animation
 				houseDice = new DicePairImpl();
 				callback.houseRoll(houseDice, this);
+				
+				try {
+					Thread.sleep(DELAY_INCREMENT);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			callback.houseRollOutcome(houseDice, this);
 		}
@@ -142,7 +148,7 @@ public class GameEngineImpl implements GameEngine {
 	public void rollPlayer(	Player player, int initialDelay, 
 			int finalDelay, int delayIncrement) {
 		
-		// FORUM: the model (i.e. this) should be rolling the dice, and for each 'bounce' call callback.playerRoll(), 
+		// TODO: FORUM: the model (i.e. this) should be rolling the dice, and for each 'bounce' call callback.playerRoll(), 
 		// then callback.playerRollOutcome() for the final result of the roll.
 		
 		//The callback's job is to take output from the model and convert it into language that the view (via its controller) understands, 
@@ -150,10 +156,6 @@ public class GameEngineImpl implements GameEngine {
 		
 		// This is the intermediate rolling
 		for (GameEngineCallback callback : this.callbacks) {
-			System.out.println("Rolling dice for player...");
-			
-			// You don't need pair, but you could use this to update the GUI
-			// which will show the actual numbers
 			for(int i = 0; i < FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Handles GUI animation
 				playerDice = new DicePairImpl();

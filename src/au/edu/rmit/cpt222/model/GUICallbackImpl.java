@@ -1,5 +1,7 @@
 package au.edu.rmit.cpt222.model;
 
+import java.util.logging.Level;
+
 import au.edu.rmit.cpt222.controller.MainController;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine;
@@ -19,8 +21,9 @@ public class GUICallbackImpl extends GameEngineCallbackImpl {
 	public void houseRoll(DicePair dicePair, GameEngine engine) {
 		super.houseRoll(dicePair, engine);
 		
-		
-
+		// Update the controller/view
+		String rollType = "house";
+		this.controller.updateRollArea(rollType, dicePair.getDice1().getFace(), dicePair.getDice2().getFace());
 	}
 	
 	@Override
@@ -29,7 +32,12 @@ public class GUICallbackImpl extends GameEngineCallbackImpl {
 		super.playerRoll(player, dicePair, engine);
 		
 		// Update the controller/view
-		this.controller.updateRollArea(dicePair.getDice1().getFace(), dicePair.getDice2().getFace());
+		String rollType = "player";
+		this.controller.updateRollArea(rollType, dicePair.getDice1().getFace(), dicePair.getDice2().getFace());
+	}
+	
+	public void playerRollOutcome(Player player, DicePair result, GameEngine engine) {
+		// TODO: Update controller with final result (where in the view to display?)
 	}
 	
 	@Override

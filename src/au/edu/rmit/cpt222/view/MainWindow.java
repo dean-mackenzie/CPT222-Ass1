@@ -53,9 +53,13 @@ public class MainWindow extends JFrame  {
 	}
 	
 	// Methods to update view
-	public void updateRollPanel(int dice1, int dice2) {
-		rollArea.updatePlayerDice1(dice1);
-		rollArea.updatePlayerDice2(dice2);
+	public void updateRollPanel(String rollType, int dice1, int dice2) {
+		if (rollType.equals("player")) {
+			rollArea.updatePlayerDice(dice1, dice2);
+		}
+		else {
+			rollArea.updateHouseDice(dice1, dice2);
+		}
 	}
 	
 	public void displayWarning(String message) {
