@@ -129,13 +129,13 @@ public class GameEngineImpl implements GameEngine {
 	public void rollHouse(int initialDelay, int finalDelay, int delayIncrement) {
 		// As per rollPlayer (minus player)
 		System.out.println("Rolling dice for house...");
-		for (GameEngineCallback callbacks : callbacks) {
+		for (GameEngineCallback callback : this.callbacks) {
 			for(int i = initialDelay; i < finalDelay; i = i+delayIncrement) {
 				// Handles GUI animation
 				houseDice = new DicePairImpl();
-				callbacks.houseRoll(houseDice, this);
+				callback.houseRoll(houseDice, this);
 			}
-			callbacks.houseRollOutcome(houseDice, this);
+			callback.houseRollOutcome(houseDice, this);
 		}
 	}
 	
@@ -149,7 +149,7 @@ public class GameEngineImpl implements GameEngine {
 		//thus separating model and view logic. E.g. the view shouldn't need to know about DicePair.
 		
 		// This is the intermediate rolling
-		for (GameEngineCallback callbacks : callbacks) {
+		for (GameEngineCallback callback : this.callbacks) {
 			System.out.println("Rolling dice for player...");
 			
 			// You don't need pair, but you could use this to update the GUI
@@ -157,7 +157,7 @@ public class GameEngineImpl implements GameEngine {
 			for(int i = 0; i < FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Handles GUI animation
 				playerDice = new DicePairImpl();
-				callbacks.playerRoll(player, playerDice, this);
+				callback.playerRoll(player, playerDice, this);
 				try {
 					Thread.sleep(DELAY_INCREMENT);
 				} catch (InterruptedException e) {
@@ -167,7 +167,7 @@ public class GameEngineImpl implements GameEngine {
 			}
 
 			// Get final roll outcome
-			callbacks.playerRollOutcome(player, player.getRollResult(), this);
+			callback.playerRollOutcome(player, player.getRollResult(), this);
 		}
 	}
 	

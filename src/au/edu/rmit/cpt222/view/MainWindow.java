@@ -2,9 +2,13 @@ package au.edu.rmit.cpt222.view;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import au.edu.rmit.cpt222.controller.MainController;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine;
+import au.edu.rmit.cpt222.model.interfaces.Player;
 
 public class MainWindow extends JFrame  {
 	Container window = new JFrame();
@@ -43,6 +47,15 @@ public class MainWindow extends JFrame  {
 		window.add(bottomBars, BorderLayout.PAGE_END);
 	}
 	
+	// Methods to update view
+	public void updateRollPanel(int dice1, int dice2) {
+		rollArea.updatePlayerDice1(dice1);
+		rollArea.updatePlayerDice2(dice2);
+	}
+	
+
+	
+	// Accessor methods for other system parts
 	public GameEngine getModel() {
 		return this.gameEngine;
 	}

@@ -31,10 +31,9 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		// Set the result dice to parameter
 		result = dicePair;
 				
-		//TODO: Update view to show mapped images in view
-			//code here
+		//TODO: Add GUIcallback method for this to update UI rollArea for house
 		
-		//TODO: this is just temp logging to show each intermediate roll
+		//TODO: this is temp logging to show intermediate rolls
 		System.out.println("House roll is: " + result.getTotalScore());
 	}
 	
@@ -46,15 +45,11 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	}
 	
 	public void playerRoll(Player player, DicePair dicePair, GameEngine engine) {
-		//TODO: Update view to show mapped images in GUI(?)
-			
 		// Log intermediate roll
-		System.out.println("Player roll is: " + dicePair.getTotalScore());
+		System.out.println("Roll for " + player.getPlayerName() + " is: " + dicePair.getTotalScore());
 		
 		// Set current roll result (only final one will be used)
-		// TODO: shouldn't this be in playerRollOutcome???
 		player.setRollResult(dicePair);
-		
 	}
 	
 	//This is for the "final" roll (i.e. the player's roll)

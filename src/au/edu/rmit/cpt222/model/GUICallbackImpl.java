@@ -7,7 +7,6 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
 public class GUICallbackImpl extends GameEngineCallbackImpl {
-	
 	MainController controller;
 	
 	public GUICallbackImpl(MainController controller) {
@@ -19,8 +18,11 @@ public class GUICallbackImpl extends GameEngineCallbackImpl {
 	
 	@Override
 	public void playerRoll(Player player, DicePair dicePair, GameEngine engine) {
-		System.out.println("Rolling dice");
-		this.controller.updateRollArea();
+		// Make the actual roll in callbacks
+		super.playerRoll(player, dicePair, engine);
+		
+		// Update the controller/view
+		this.controller.updateRollArea(dicePair.getDice1().getFace(), dicePair.getDice2().getFace());
 	}
 	
 	@Override
