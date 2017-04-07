@@ -1,29 +1,22 @@
 package au.edu.rmit.cpt222.view;
 
-import java.util.List;
+import java.awt.BorderLayout;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import au.edu.rmit.cpt222.controller.TopMenuController;
+import au.edu.rmit.cpt222.controller.TopController;
 
 public class TopMenu extends JPanel {
-	
 	public static final String PLAY_TEXT = "Play";
 	public static final String ADDPLAYER_TEXT = "Add Player";
 	public static final String QUIT_TEXT = "Quit";
-		
-	private MainWindow mw;
-	private TopMenuController tmc;
 	
-	private JButton addPlayer;
-	private JButton play;
-	private JButton quit;
-	//private JButton reset;
-	private JComboBox playerCombo;
+	MainWindow mw;
 	
+	TopMenuBar topMenuBar;
+	TopMenuButtons topMenuButtons;
+	
+	TopController tc;
 	
 	public TopMenu(MainWindow mw) {
 		this.mw = mw;
@@ -31,47 +24,28 @@ public class TopMenu extends JPanel {
 	}
 	
 	public void createTopMenu() {
-		//Add buttons
-		addPlayer = new JButton(ADDPLAYER_TEXT);
-		play = new JButton(PLAY_TEXT);
-		quit = new JButton(QUIT_TEXT);
-		// TODO: Add reset only if time
-		//	reset = new JButton("Reset");
+		this.setLayout(new BorderLayout());
 		
-		//Add UI components to panel
-		this.playerCombo = new JComboBox();
+		topMenuBar = new TopMenuBar(this.mw, this.tc);
+		topMenuButtons = new TopMenuButtons(this.mw, this.tc);
 		
-		this.add(playerCombo);
-		this.add(addPlayer);
-		this.add(play);
-		this.add(quit);
-	//	this.add(reset);
+		this.add(topMenuBar, BorderLayout.PAGE_START);
+		this.add(topMenuButtons, BorderLayout.PAGE_END);
 		
-		this.addPlayer.setActionCommand(ADDPLAYER_TEXT);
-		this.play.setActionCommand(PLAY_TEXT);
-		this.quit.setActionCommand(QUIT_TEXT);
-		
-		// Set action listeners
-		this.tmc = new TopMenuController(this);
-		this.addPlayer.addActionListener(this.tmc);
-		this.play.addActionListener(this.tmc);
-		this.quit.addActionListener(this.tmc);
+		// Set controller to components
+		this.tc = new TopController(topMenuButtons, topMenuBar);
+		topMenuBar.setController(tc);
+		topMenuButtons.setController(tc);
 	}
 	
 	public MainWindow getMainWindow() {
-		return mw;
+		return this.mw;
 	}
 	
-	public void updatePlayerCombo(List<String> playerNames) {
-		@SuppressWarnings("unchecked")
-		DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) this.playerCombo.getModel();
-		model.removeAllElements();
-		
-		for (String name : playerNames) {
-			model.addElement(name);
-		}
-		
-		this.playerCombo.setModel(model);
+	public TopController getTopController() {
+		return tc;
 	}
+	
+	
 
 }

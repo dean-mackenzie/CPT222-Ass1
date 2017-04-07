@@ -36,18 +36,18 @@ public class MainWindow extends JFrame  {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Set Layout Manager
-		window.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());
 		window = getContentPane();
 		
 		// Add component views
 		topMenu = new TopMenu(this);
-		window.add(topMenu, BorderLayout.PAGE_START);
+		this.add(topMenu, BorderLayout.PAGE_START);
 
 		rollArea = new RollArea(this);
-		window.add(rollArea, BorderLayout.CENTER);
+		this.add(rollArea, BorderLayout.CENTER);
 
 		bottomBars = new BottomBars(this);
-		window.add(bottomBars, BorderLayout.PAGE_END);
+		this.add(bottomBars, BorderLayout.PAGE_END);
 	}
 	
 	// Methods to update view
