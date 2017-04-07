@@ -47,7 +47,7 @@ public class MainController {
 					}
 				}.start();
 			} catch (InsufficientFundsException e) {
-				this.updateErrorLog("Insufficient funds to place a bet of that size.");
+				this.mw.displayWarning("Insufficient funds to place a bet of that size.");
 			}
 		}
 	}
@@ -81,9 +81,5 @@ public class MainController {
 	public void updateStatusArea(GameStatus result, int bet, int points) {
 		String resultText = String.valueOf(result);
 		this.mw.getBottomBars().updateGameStatus(resultText, bet, points);
-	}
-	
-	public void updateErrorLog(String errorMsg) {
-		this.mw.getBottomBars().updateError(errorMsg);
 	}
 }

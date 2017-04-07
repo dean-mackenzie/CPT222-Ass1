@@ -21,8 +21,6 @@ public class MainWindow extends JFrame  {
 	private BottomBars bottomBars;
 	private RollArea rollArea;
 	
-	private JOptionPane warning;
-
 	private MainController controller;
 	
 	public MainWindow(GameEngine engine) {
@@ -70,8 +68,6 @@ public class MainWindow extends JFrame  {
 		JOptionPane.showMessageDialog(this, message);
 	}
 	
-
-	
 	// Accessor methods for other system parts
 	public GameEngine getModel() {
 		return this.gameEngine;
@@ -87,6 +83,10 @@ public class MainWindow extends JFrame  {
 	
 	public BottomBars getBottomBars() {
 		return this.bottomBars;
+	}
+	
+	public RollArea getRollArea() {
+		return this.rollArea;
 	}
 	
 }

@@ -13,11 +13,9 @@ public class BottomBars extends JPanel {
 	
 	private JPanel status;
 	private JPanel winLoss;
-	private JPanel errorLog;
 	
 	private JLabel statusText;
 	private JLabel winLossText;
-	private JLabel errorText;
 	
 	public BottomBars(MainWindow mw) {
 		this.mw = mw;
@@ -30,7 +28,6 @@ public class BottomBars extends JPanel {
 		
 		status = new JPanel();
 		winLoss = new JPanel();
-		errorLog = new JPanel();
 				
 		// Configure each sub panel
 		status.setBackground(Color.LIGHT_GRAY);
@@ -46,35 +43,16 @@ public class BottomBars extends JPanel {
 		winLossText = new JLabel("Bet: 0, Points: 0");
 		winLoss.add(winLossText);
 		
-		errorLog.setPreferredSize(new Dimension((int) (mw.getWidth() / 2.5), 30));
-		errorLog.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		errorText = new JLabel("Error Log");
-		errorLog.add(errorText);
-		
 		this.add(status, BorderLayout.LINE_START);
 		this.add(winLoss,BorderLayout.LINE_END);
-		this.add(errorLog, BorderLayout.PAGE_END);
-		
-		
 	}
 	
 	public void updatePoints(int bet, int points) {
 		winLossText.setText("Bet: " + bet + ", Updated Points: " + points);
-		
 	}
 	
 	public void updateGameStatus(String resultText, int bet, int points) {
 		statusText.setText("Game Result: " + resultText);
 		this.updatePoints(bet, points);
-		
-		// Assuming game status returned, reset error log
-		errorLog.setBackground(Color.WHITE);
-		errorText.setText(null);
 	}
-	
-	public void updateError(String errorMsg) {
-		errorText.setText(errorMsg);
-		errorLog.setBackground(Color.RED);
-	}
-
 }
