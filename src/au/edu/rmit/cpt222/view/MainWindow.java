@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import au.edu.rmit.cpt222.controller.MainController;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine;
 import au.edu.rmit.cpt222.model.interfaces.Player;
@@ -14,9 +16,12 @@ public class MainWindow extends JFrame  {
 	Container window = new JFrame();
 	private GameEngine gameEngine;
 	
+	// Main window sections
 	private TopMenu topMenu;
 	private BottomBars bottomBars;
 	private RollArea rollArea;
+	
+	private JOptionPane warning;
 
 	private MainController controller;
 	
@@ -51,6 +56,10 @@ public class MainWindow extends JFrame  {
 	public void updateRollPanel(int dice1, int dice2) {
 		rollArea.updatePlayerDice1(dice1);
 		rollArea.updatePlayerDice2(dice2);
+	}
+	
+	public void displayWarning(String message) {
+		JOptionPane.showMessageDialog(this, message);
 	}
 	
 

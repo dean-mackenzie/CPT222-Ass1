@@ -7,17 +7,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import au.edu.rmit.cpt222.controller.AddPlayerButtonListener;
-import au.edu.rmit.cpt222.controller.PlayButtonListener;
-import au.edu.rmit.cpt222.controller.QuitButtonListener;
-import au.edu.rmit.cpt222.controller.ResetButtonListener;
 import au.edu.rmit.cpt222.controller.TopMenuController;
-import au.edu.rmit.cpt222.model.interfaces.Player;
 
 public class TopMenu extends JPanel {
 	
 	public static final String PLAY_TEXT = "Play";
-	public static final String ADDPLAYER_TEXT = "AddPlayer";
+	public static final String ADDPLAYER_TEXT = "Add Player";
 	public static final String QUIT_TEXT = "Quit";
 		
 	private MainWindow mw;
@@ -52,7 +47,6 @@ public class TopMenu extends JPanel {
 		this.add(quit);
 	//	this.add(reset);
 		
-
 		this.addPlayer.setActionCommand(ADDPLAYER_TEXT);
 		this.play.setActionCommand(PLAY_TEXT);
 		this.quit.setActionCommand(QUIT_TEXT);
@@ -62,14 +56,6 @@ public class TopMenu extends JPanel {
 		this.addPlayer.addActionListener(this.tmc);
 		this.play.addActionListener(this.tmc);
 		this.quit.addActionListener(this.tmc);
-		
-
-		// delete
-//		addPlayer.addActionListener(new AddPlayerButtonListener(mw, playerCombo));
-//		play.addActionListener(new PlayButtonListener(mw));
-//		quit.addActionListener(new QuitButtonListener(mw));
-//	//	reset.addActionListener(new ResetButtonListener(mw));
-		
 	}
 	
 	public MainWindow getMainWindow() {

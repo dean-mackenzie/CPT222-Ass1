@@ -30,8 +30,6 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	public void houseRoll(DicePair dicePair, GameEngine engine) {
 		// Set the result dice to parameter
 		result = dicePair;
-				
-		//TODO: Add GUIcallback method for this to update UI rollArea for house
 		
 		//TODO: this is temp logging to show intermediate rolls
 		System.out.println("House roll is: " + result.getTotalScore());

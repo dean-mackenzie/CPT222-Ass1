@@ -27,6 +27,8 @@ public class RollArea extends JPanel {
 		
 		playerDice1 = new JLabel("Player Dice 1");
 		playerDice2 = new JLabel("Player Dice 2");
+		houseDice1 = new JLabel("House Dice 1");
+		houseDice2 = new JLabel("House Dice 2");
 		
 		// Add components
 		this.add(leftDice);
@@ -34,7 +36,8 @@ public class RollArea extends JPanel {
 		
 		leftDice.add(playerDice1);
 		leftDice.add(playerDice2);
-		rightDice.add(new JLabel("Where house dice go"));
+		rightDice.add(houseDice1);
+		rightDice.add(houseDice2);
 	}
 	
 	public void updatePlayerDice1(int dice) {

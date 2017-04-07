@@ -16,6 +16,13 @@ public class GUICallbackImpl extends GameEngineCallbackImpl {
 	//However, my recommendation would be to use only GUICallbackImpl when working with the GUI portion of your system (you don't really need to create instances of both Callback types). 
 	//his way you can utilise this GUICallbackImpl to perform both logging and view updates e.g. in GUICallbackImpl 
 	
+	public void houseRoll(DicePair dicePair, GameEngine engine) {
+		super.houseRoll(dicePair, engine);
+		
+		
+
+	}
+	
 	@Override
 	public void playerRoll(Player player, DicePair dicePair, GameEngine engine) {
 		// Make the actual roll in callbacks
