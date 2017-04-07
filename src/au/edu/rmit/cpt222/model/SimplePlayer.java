@@ -85,16 +85,26 @@ public class SimplePlayer implements Player {
 		playerDice = rollResult;
 	}
 	
+	@Override
 	public String toString() {
-		String playerDetails = ("Player: id= " + this.getPlayerId() 
-			+ ", name= " + this.getPlayerName() + ", bet amount= " + this.getBet() 
-			+ ", roll result = Dice 1: " + this.getRollResult().getDice1().getFace()
-			+ ", Dice 2: " + this.getRollResult().getDice2().getFace()
-			+ " ... Total: " + this.getRollResult().getTotalScore()
-			+ ", game outcome = " + this.getGameResult()
-			+ ", total credit points= " + this.getPoints());
+		String playerDetails;
+		
+		// Don't call rolls, throws exception calling methods on null object
+		if (this.getGameResult() == null) {
+			playerDetails = ("Player: id= " + this.getPlayerId() + 
+				", name= " + this.getPlayerName() + ", bet amount= " + this.getBet() +
+				", total credit points= " + this.getPoints());
+			
+		}
+		else {
+		playerDetails = ("Player: id= " + this.getPlayerId() + 
+			", name= " + this.getPlayerName() + ", bet amount= " + this.getBet() +
+			", roll result = Dice 1: " + String.valueOf(this.getRollResult().getDice2().getFace()) +
+			", Dice 2: " + String.valueOf(this.getRollResult().getDice2().getFace()) +
+			" ... Total: " + String.valueOf(this.getRollResult().getTotalScore()) + 
+			", game outcome = " + this.getGameResult() + 
+			", total credit points= " + this.getPoints());
+		}
 		return playerDetails;
 	}
-	
-
 }

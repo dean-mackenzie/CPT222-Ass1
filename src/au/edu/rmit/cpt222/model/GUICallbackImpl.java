@@ -42,8 +42,13 @@ public class GUICallbackImpl extends GameEngineCallbackImpl {
 	
 	@Override
 	public void gameResult(Player player, GameStatus result, GameEngine engine) {
-	    super.gameResult (player, result, engine); // "ask" default GameEngineCallbackImpl to log to the console
-	   // controller.updateXYZ(...);  // "ask" Controller to update the View
+	    super.gameResult(player, result, engine);
+	    
+	    // Update the controller/view
+	    int bet = player.getBet();
+	    int points = player.getPoints();
+	    this.controller.updateStatusArea(result, bet, points);
+
 	}
 
 }

@@ -55,7 +55,7 @@ public class GameEngineImpl implements GameEngine {
 					
 					// Subtract bet from player points
 					int points = player.getPoints() - player.getBet();
-					player.setPoints(points);
+					this.setPlayerPoints(player, points);
 				}
 				else if (houseDice.getTotalScore() == player.getRollResult().getTotalScore()) {
 					GameStatus status = GameEngine.GameStatus.DREW;					
@@ -69,7 +69,7 @@ public class GameEngineImpl implements GameEngine {
 					
 					// Add bet to player points
 					int points = player.getPoints() + player.getBet();
-					player.setPoints(points);
+					this.setPlayerPoints(player, points);
 				}
 				
 				// Display result
@@ -108,8 +108,6 @@ public class GameEngineImpl implements GameEngine {
 //		} catch (IllegalArgumentException e) {
 //			;
 //		}
-		
-		
 	}
 
 	public void removeGameEngineCallback(GameEngineCallback gameEngineCallback) {
@@ -173,10 +171,8 @@ public class GameEngineImpl implements GameEngine {
 		}
 	}
 	
-	// FORUM: This method is actually intended to be called from the "client" in order to update the player's balance 
-	//(e.g. upon depositing more funds etc.). This functionality will be covered in Ass 2.
 	public void setPlayerPoints(Player player, int totalPoints) {
-		;
+		player.setPoints(totalPoints);
 	}
 
 }

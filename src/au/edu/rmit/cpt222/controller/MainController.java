@@ -8,6 +8,7 @@ import au.edu.rmit.cpt222.model.GUICallbackImpl;
 import au.edu.rmit.cpt222.model.SimplePlayer;
 import au.edu.rmit.cpt222.model.exceptions.InsufficientFundsException;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine;
+import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 import au.edu.rmit.cpt222.view.MainWindow;
 
@@ -23,13 +24,16 @@ public class MainController {
 		this.engine.addGameEngineCallback(new GUICallbackImpl(this));
 	}
 	
-	public void betAndRoll(int bet) {
-		// Check at least 1 player exists
-		if (this.engine.getAllPlayers().size() < 1) {
-			this.mw.displayWarning("Player must be added before playing.");
-			return;
-		}
+	public boolean addPlayer(String playerId, String playerName, int points) {
+		// TODO: if error, return false
+		SimplePlayer player = new SimplePlayer(playerId, playerName, points);
+		this.engine.addPlayer(player);
+		this.mw.updatePoints(player.getBet(), player.getPoints());
 		
+		return true;
+	}
+	
+	public void betAndRoll(int bet) {
 		//Place bet
 		for (Player player : this.engine.getAllPlayers()) {
 			try {
@@ -37,27 +41,26 @@ public class MainController {
 				
 				new Thread() {
 					public void run() {
-						
-					// TODO:	SimplePlayer bob = new SimplePlayer("1", "bob", 100); (for testing only)				
 						//TODO: use proper parameters
 						MainController.this.engine.rollPlayer(player, 0, 0, 0);
 						MainController.this.engine.calculateResult();
 					}
 				}.start();
 			} catch (InsufficientFundsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				this.updateErrorLog("Insufficient funds to place a bet of that size.");
 			}
 		}
 	}
 	
-	public boolean addPlayer(String playerId, String playerName, int points) {
-		SimplePlayer player = new SimplePlayer(playerId, playerName, points);
-		this.engine.addPlayer(player);
-		
+	public boolean checkPlayerExists() {
+		if (this.engine.getAllPlayers().size() < 1) {
+			this.mw.displayWarning("Player must be added before playing.");
+			return false;
+		}
 		return true;
 	}
-		
+	
+	
 	// Methods to update view
 	public void updateRollArea(String rollType, int dice1, int dice2) {
 		this.mw.updateRollPanel(rollType, dice1, dice2);
@@ -73,5 +76,14 @@ public class MainController {
 		}
 		
 		return playerNames;
+	}
+	
+	public void updateStatusArea(GameStatus result, int bet, int points) {
+		String resultText = String.valueOf(result);
+		this.mw.getBottomBars().updateGameStatus(resultText, bet, points);
+	}
+	
+	public void updateErrorLog(String errorMsg) {
+		this.mw.getBottomBars().updateError(errorMsg);
 	}
 }

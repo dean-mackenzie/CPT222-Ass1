@@ -62,6 +62,10 @@ public class MainWindow extends JFrame  {
 		}
 	}
 	
+	public void updatePoints(int bet, int points) {
+		bottomBars.updatePoints(bet, points);
+	}
+	
 	public void displayWarning(String message) {
 		JOptionPane.showMessageDialog(this, message);
 	}
@@ -79,6 +83,10 @@ public class MainWindow extends JFrame  {
 	
 	public MainController getMainController() {
 		return this.controller;
+	}
+	
+	public BottomBars getBottomBars() {
+		return this.bottomBars;
 	}
 	
 }
