@@ -49,12 +49,8 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 		this.logger.log(Level.INFO, "Player: " + player.getPlayerName() + ", intermediate roll= Dice 1: " 
 			+ dicePair.getDice1().getFace() + ", Dice 2: " + dicePair.getDice2().getFace()  
 			+  " ... Total: " + dicePair.getTotalScore());
-		
-		// Set current roll result (only final one will be used)
-		player.setRollResult(dicePair);
 	}
 	
-	//This is for the "final" roll (i.e. the player's roll)
 	public void playerRollOutcome(Player player, DicePair result, GameEngine engine) {
 		// Log final roll outcome
 		this.logger.log(Level.INFO, "Player: " + player.getPlayerName() 

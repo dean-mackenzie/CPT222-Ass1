@@ -17,8 +17,8 @@ import au.edu.rmit.cpt222.model.interfaces.Player;
 public class GameEngineImpl implements GameEngine {
 	//Variables
 	public final static int INITIAL_DELAY = 1;
-	public final static int FINAL_DELAY = 500;
-	public final static int DELAY_INCREMENT = 20;
+	public final static int FINAL_DELAY = 1000;
+	public final static int DELAY_INCREMENT = 200;
 	
 	//ConcurrentHashMap is a better choice for multi-player/threaded
 	private Map<String, Player> players = new HashMap<String, Player>(); 
@@ -48,6 +48,7 @@ public class GameEngineImpl implements GameEngine {
 			rollHouse(INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
 			
 			for (Player player : players.values()) {
+				// TODO: if player has no dice value, haven't rolled, so bypass?
 				// Compare rolls, set result and add/subtract points
 				if (houseDice.getTotalScore() > player.getRollResult().getTotalScore()) {
 					GameStatus status = GameEngine.GameStatus.LOST;					
@@ -88,26 +89,19 @@ public class GameEngineImpl implements GameEngine {
 	}
 	
 	public void placeBet(Player player, int betPoints) throws InsufficientFundsException {
-	//	try {
-			Player playerToBet = getPlayer(player.getPlayerId());
-			
-			//Check if enough points to bet, then place bet
-			
-			if (betPoints > playerToBet.getPoints()) {
-				throw new InsufficientFundsException();
-			}
-			else if (betPoints < 1) {
-				throw new IllegalArgumentException();
-			}
-			else {
-				playerToBet.placeBet(betPoints);
-			}
-		//TODO: just throw exceptions back up to be handled elsewhere?
-//		} catch (InsufficientFundsException e) {
-//			;
-//		} catch (IllegalArgumentException e) {
-//			;
-//		}
+		Player playerToBet = getPlayer(player.getPlayerId());
+		
+		//Check if enough points to bet, then place bet
+		
+		if (betPoints > playerToBet.getPoints()) {
+			throw new InsufficientFundsException();
+		}
+		else if (betPoints < 1) {
+			throw new IllegalArgumentException();
+		}
+		else {
+			playerToBet.placeBet(betPoints);
+		}
 	}
 
 	public void removeGameEngineCallback(GameEngineCallback gameEngineCallback) {
@@ -158,6 +152,7 @@ public class GameEngineImpl implements GameEngine {
 				// Handles GUI animation
 				playerDice = new DicePairImpl();
 				callback.playerRoll(player, playerDice, this);
+				player.setRollResult(playerDice);
 				try {
 					Thread.sleep(DELAY_INCREMENT);
 				} catch (InterruptedException e) {

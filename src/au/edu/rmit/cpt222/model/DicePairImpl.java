@@ -2,7 +2,6 @@ package au.edu.rmit.cpt222.model;
 
 import au.edu.rmit.cpt222.model.interfaces.Dice;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DicePairImpl implements DicePair {
 	

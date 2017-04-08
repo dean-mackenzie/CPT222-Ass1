@@ -42,7 +42,7 @@ public class MainController {
 				new Thread() {
 					public void run() {
 						//TODO: use proper parameters
-						MainController.this.engine.rollPlayer(player, 1, 500, 20);
+						MainController.this.engine.rollPlayer(player, 1, 80, 20);
 						MainController.this.engine.calculateResult();
 					}
 				}.start();

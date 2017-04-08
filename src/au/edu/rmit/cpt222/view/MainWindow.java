@@ -32,7 +32,7 @@ public class MainWindow extends JFrame  {
 	}
 	
 	public void createMainWindow() {
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 1000, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Set Layout Manager
@@ -58,6 +58,8 @@ public class MainWindow extends JFrame  {
 		else {
 			rollArea.updateHouseDice(dice1, dice2);
 		}
+		// Avoids intermittent refresh problems
+		this.repaint();
 	}
 	
 	public void updatePoints(int bet, int points) {
