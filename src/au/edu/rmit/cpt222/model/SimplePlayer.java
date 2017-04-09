@@ -54,8 +54,6 @@ public class SimplePlayer implements Player {
 		
 		//Place bet
 		this.bet = bet;
-		
-		//TODO: anything else?
 	}
 	
 	//TODO: Ignore for Assignment 1 (as per interface details)
@@ -82,8 +80,9 @@ public class SimplePlayer implements Player {
 	@Override
 	public String toString() {
 		String playerDetails;
-		
-		// Don't call rolls, throws exception calling methods on null object
+	
+		// If no game result, don't call rolls
+		// This will throw exception calling methods on null objects
 		if (this.getGameResult() == null) {
 			playerDetails = ("Player: id= " + this.getPlayerId() + 
 				", name= " + this.getPlayerName() + ", bet amount= " + this.getBet() +
@@ -91,13 +90,13 @@ public class SimplePlayer implements Player {
 			
 		}
 		else {
-		playerDetails = ("Player: id= " + this.getPlayerId() + 
-			", name= " + this.getPlayerName() + ", bet amount= " + this.getBet() +
-			", roll result = Dice 1: " + String.valueOf(this.getRollResult().getDice2().getFace()) +
-			", Dice 2: " + String.valueOf(this.getRollResult().getDice2().getFace()) +
-			" ... Total: " + String.valueOf(this.getRollResult().getTotalScore()) + 
-			", game outcome = " + this.getGameResult() + 
-			", total credit points= " + this.getPoints());
+			playerDetails = ("Player: id= " + this.getPlayerId() + 
+				", name= " + this.getPlayerName() + ", bet amount= " + this.getBet() +
+				", roll result = Dice 1: " + String.valueOf(this.getRollResult().getDice2().getFace()) +
+				", Dice 2: " + String.valueOf(this.getRollResult().getDice2().getFace()) +
+				" ... Total: " + String.valueOf(this.getRollResult().getTotalScore()) + 
+				", game outcome = " + this.getGameResult() + 
+				", total credit points= " + this.getPoints());
 		}
 		return playerDetails;
 	}

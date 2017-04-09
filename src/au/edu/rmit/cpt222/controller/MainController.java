@@ -12,8 +12,10 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 import au.edu.rmit.cpt222.view.MainWindow;
 
-// perform all model communication
 public class MainController {
+	public final static int INITIAL_DELAY = 1;
+	public final static int FINAL_DELAY = 1000;
+	public final static int DELAY_INCREMENT = 200;
 	
 	private MainWindow mw;
 	private GameEngine engine;
@@ -25,11 +27,14 @@ public class MainController {
 	}
 	
 	public boolean addPlayer(String playerId, String playerName, int points) {
-		// TODO: if error, return false
-		SimplePlayer player = new SimplePlayer(playerId, playerName, points);
-		this.engine.addPlayer(player);
-		this.mw.updatePoints(player.getBet(), player.getPoints());
-		
+		try {
+			SimplePlayer player = new SimplePlayer(playerId, playerName, points);
+			this.engine.addPlayer(player);
+			this.mw.updatePoints(player.getBet(), player.getPoints());
+		} catch (Exception e) {
+			// Not sure what exceptions may be raised, so catch all
+			return false;
+		}
 		return true;
 	}
 	
@@ -41,8 +46,8 @@ public class MainController {
 				
 				new Thread() {
 					public void run() {
-						//TODO: use proper parameters
-						MainController.this.engine.rollPlayer(player, 1, 80, 20);
+						MainController.this.engine.rollPlayer(
+								player, INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
 						MainController.this.engine.calculateResult();
 					}
 				}.start();
@@ -60,10 +65,8 @@ public class MainController {
 		return true;
 	}
 	
-	
-	// Methods to update view
-	public void updateRollArea(String rollType, int dice1, int dice2) {
-		this.mw.updateRollPanel(rollType, dice1, dice2);
+	public int getNumberPlayers() {
+		return this.engine.getAllPlayers().size();
 	}
 	
 	public List<String> getPlayerNames() {
@@ -76,6 +79,23 @@ public class MainController {
 		}
 		
 		return playerNames;
+	}
+	
+	// NOTE: This couples the controller to the view a little,
+	// but the callback interfaces don't provide ways to do this
+	public void reset() {
+		// Get list of players
+		for (Player player : this.engine.getAllPlayers()) {
+			// Remove player from HashMap
+			this.engine.removePlayer(player);
+		}
+		
+		// Reset roll area
+		this.mw.getRollArea().resetRollArea();
+	}
+		
+	public void updateRollArea(String rollType, int dice1, int dice2) {
+		this.mw.updateRollPanel(rollType, dice1, dice2);
 	}
 	
 	public void updateStatusArea(GameStatus result, int bet, int points) {

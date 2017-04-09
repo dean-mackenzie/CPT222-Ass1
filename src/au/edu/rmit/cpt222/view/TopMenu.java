@@ -6,16 +6,16 @@ import javax.swing.JPanel;
 
 import au.edu.rmit.cpt222.controller.TopController;
 
+@SuppressWarnings("serial")
 public class TopMenu extends JPanel {
 	public static final String PLAY_TEXT = "Play";
 	public static final String ADDPLAYER_TEXT = "Add Player";
+	public static final String RESET_TEXT = "Reset";
 	public static final String QUIT_TEXT = "Quit";
 	
 	MainWindow mw;
-	
 	TopMenuBar topMenuBar;
-	TopMenuButtons topMenuButtons;
-	
+	TopToolBar topToolBar;
 	TopController tc;
 	
 	public TopMenu(MainWindow mw) {
@@ -27,15 +27,15 @@ public class TopMenu extends JPanel {
 		this.setLayout(new BorderLayout());
 		
 		topMenuBar = new TopMenuBar(this.mw, this.tc);
-		topMenuButtons = new TopMenuButtons(this.mw, this.tc);
+		topToolBar = new TopToolBar(this.mw, this.tc);
 		
 		this.add(topMenuBar, BorderLayout.PAGE_START);
-		this.add(topMenuButtons, BorderLayout.PAGE_END);
+		this.add(topToolBar, BorderLayout.PAGE_END);
 		
 		// Set controller to components
-		this.tc = new TopController(topMenuButtons, topMenuBar);
+		this.tc = new TopController(topToolBar, topMenuBar);
 		topMenuBar.setController(tc);
-		topMenuButtons.setController(tc);
+		topToolBar.setController(tc);
 	}
 	
 	public MainWindow getMainWindow() {

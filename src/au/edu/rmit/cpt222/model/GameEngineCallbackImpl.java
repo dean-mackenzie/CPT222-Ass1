@@ -11,10 +11,7 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 
 public class GameEngineCallbackImpl implements GameEngineCallback {
 	private DicePair result;
-	
-	//TODO: public class GUICallbackImpl extends GameEngineCallbackImpl
-	//This class will be a controller for the GUI - basically a specialised version of this for the GUI
-	
+
 	protected Logger logger = Logger.getLogger("Test");
 
 	public void gameResult(Player player, GameStatus result, GameEngine engine) {
@@ -57,5 +54,9 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 			+ ", final roll state= Dice 1: " + result.getDice1().getFace() 
 			+ ", Dice 2: " + result.getDice2().getFace()  
 			+  " ... Total: " + result.getTotalScore());
+	}
+	
+	public void test() {
+		
 	}
 }

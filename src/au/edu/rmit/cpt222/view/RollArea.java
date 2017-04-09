@@ -2,7 +2,6 @@ package au.edu.rmit.cpt222.view;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,9 +13,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class RollArea extends JPanel {
-	private MainWindow mw;
-	
 	private JPanel leftDice;
 	private JPanel rightDice;
 	
@@ -61,11 +59,6 @@ public class RollArea extends JPanel {
 	private Image hDiceImg5;
 	private Image hDiceImg6;
 	
-	private JLabel toDisplay1;
-	private JLabel toDisplay2;
-	private JLabel toDisplay3;
-	private JLabel toDisplay4;
-	
 	// Map for each dices to avoid duplicate results problems (e.g. 2 and 2)
 	private Map<Integer, JLabel> diceRoll1 = new HashMap<Integer, JLabel>();
 	private Map<Integer, JLabel> diceRoll2 = new HashMap<Integer, JLabel>();
@@ -73,7 +66,6 @@ public class RollArea extends JPanel {
 	private Map<Integer, JLabel> diceRoll4 = new HashMap<Integer, JLabel>();
 		
 	public RollArea(MainWindow mw) {
-		this.mw = mw;
 		createRollArea();
 	}
 	
@@ -86,16 +78,9 @@ public class RollArea extends JPanel {
 		
 		// Load images
 		this.loadImages();
-
-		playerDice = new JLabel("Play to see player dice");
-		houseDice = new JLabel("Play to see house dice");
 		
-		// Add components
-		this.add(leftDice);
-		this.add(rightDice);
-		
-		leftDice.add(playerDice);
-		rightDice.add(houseDice);
+		// Used for initial display and reset
+		this.resetRollArea();
 	}
 	
 	public void loadImages() {
@@ -118,8 +103,8 @@ public class RollArea extends JPanel {
 			//TODO: default to numbers?
 		}
 		
-		// Load dice into JLabels
-		// 1 set per dice avoids duplicat component problems
+		// Load dice into JLabels for display
+		// 1 set per dice avoids duplicate component problems
 		diceImgPnl1 = new JLabel(new ImageIcon(pDiceImg1));
 		diceImgPnl2 = new JLabel(new ImageIcon(pDiceImg2));
 		diceImgPnl3 = new JLabel(new ImageIcon(pDiceImg3));
@@ -204,5 +189,22 @@ public class RollArea extends JPanel {
 		rightDice.add(diceRoll3.get(dice1));
 		rightDice.add(diceRoll4.get(dice2));
 		rightDice.revalidate();
+	}
+	
+	public void resetRollArea() {
+		// Remove anything already in pane
+		leftDice.removeAll();
+		rightDice.removeAll();
+
+		// Set text
+		playerDice = new JLabel("Play to see player dice");
+		houseDice = new JLabel("Play to see house dice");
+		
+		// Add components
+		leftDice.add(playerDice);
+		rightDice.add(houseDice);
+		
+		this.add(leftDice);
+		this.add(rightDice);
 	}
 }

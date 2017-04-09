@@ -16,9 +16,9 @@ import au.edu.rmit.cpt222.model.interfaces.Player;
 
 public class GameEngineImpl implements GameEngine {
 	//Variables
-	public final static int INITIAL_DELAY = 1;
-	public final static int FINAL_DELAY = 1000;
-	public final static int DELAY_INCREMENT = 200;
+	public static int INITIAL_DELAY;
+	public static int FINAL_DELAY;
+	public static int DELAY_INCREMENT;
 	
 	//ConcurrentHashMap is a better choice for multi-player/threaded
 	private Map<String, Player> players = new HashMap<String, Player>(); 
@@ -28,12 +28,12 @@ public class GameEngineImpl implements GameEngine {
 			newSetFromMap(new HashMap<GameEngineCallback, Boolean>());
 	
 	//Constructor
-	public GameEngineImpl() {
-	}
+	public GameEngineImpl() {}
 	
 	//Methods
 	public void addGameEngineCallback(GameEngineCallback gameEngineCallback) {
 		callbacks.add(gameEngineCallback);
+		
 	}
 	
 	public void addPlayer(Player player) {
@@ -42,39 +42,41 @@ public class GameEngineImpl implements GameEngine {
 	
 	public void calculateResult() {
 		//Looping for multiple players (not needed for Ass 1)
-		for (GameEngineCallback callbacks : callbacks) {
-
+		for (GameEngineCallback callback : callbacks) {
 			// Roll for house
 			rollHouse(INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
 			
 			for (Player player : players.values()) {
-				// TODO: if player has no dice value, haven't rolled, so bypass?
-				// Compare rolls, set result and add/subtract points
-				if (houseDice.getTotalScore() > player.getRollResult().getTotalScore()) {
-					GameStatus status = GameEngine.GameStatus.LOST;					
-					player.setGameResult(status);
+				// Players who are playing must have a bet and a score
+				// This conditional may not be required in Assignment 2
+				if (player.getBet() > 0 && player.getRollResult().getTotalScore() > 0) {
+					// Compare rolls, set result and add/subtract points
+					if (houseDice.getTotalScore() > player.getRollResult().getTotalScore()) {
+						GameStatus status = GameEngine.GameStatus.LOST;					
+						player.setGameResult(status);
+						
+						// Subtract bet from player points
+						int points = player.getPoints() - player.getBet();
+						this.setPlayerPoints(player, points);
+					}
+					else if (houseDice.getTotalScore() == player.getRollResult().getTotalScore()) {
+						GameStatus status = GameEngine.GameStatus.DREW;					
+						player.setGameResult(status);
+						
+						// No change to points on a draw
+					}
+					else {
+						GameStatus status = GameEngine.GameStatus.WON;					
+						player.setGameResult(status);
+						
+						// Add bet to player points
+						int points = player.getPoints() + player.getBet();
+						this.setPlayerPoints(player, points);
+					}
 					
-					// Subtract bet from player points
-					int points = player.getPoints() - player.getBet();
-					this.setPlayerPoints(player, points);
+					// Display result
+					callback.gameResult(player, player.getGameResult(), this);
 				}
-				else if (houseDice.getTotalScore() == player.getRollResult().getTotalScore()) {
-					GameStatus status = GameEngine.GameStatus.DREW;					
-					player.setGameResult(status);
-					
-					// No change to points on a draw
-				}
-				else {
-					GameStatus status = GameEngine.GameStatus.WON;					
-					player.setGameResult(status);
-					
-					// Add bet to player points
-					int points = player.getPoints() + player.getBet();
-					this.setPlayerPoints(player, points);
-				}
-				
-				// Display result
-				callbacks.gameResult(player, player.getGameResult(), this);
 			}
 		}
 	}
@@ -92,7 +94,6 @@ public class GameEngineImpl implements GameEngine {
 		Player playerToBet = getPlayer(player.getPlayerId());
 		
 		//Check if enough points to bet, then place bet
-		
 		if (betPoints > playerToBet.getPoints()) {
 			throw new InsufficientFundsException();
 		}
@@ -106,6 +107,10 @@ public class GameEngineImpl implements GameEngine {
 
 	public void removeGameEngineCallback(GameEngineCallback gameEngineCallback) {
 		callbacks.remove(gameEngineCallback);
+	}
+	
+	public void removeAllPlayers() {
+		players.clear();
 	}
 
 	public boolean removePlayer(Player player) {
@@ -140,13 +145,12 @@ public class GameEngineImpl implements GameEngine {
 	public void rollPlayer(	Player player, int initialDelay, 
 			int finalDelay, int delayIncrement) {
 		
-		// TODO: FORUM: the model (i.e. this) should be rolling the dice, and for each 'bounce' call callback.playerRoll(), 
-		// then callback.playerRollOutcome() for the final result of the roll.
+		// Sets delays for both this and house roll
+		INITIAL_DELAY = initialDelay;
+		FINAL_DELAY = finalDelay;
+		DELAY_INCREMENT = delayIncrement;
 		
-		//The callback's job is to take output from the model and convert it into language that the view (via its controller) understands, 
-		//thus separating model and view logic. E.g. the view shouldn't need to know about DicePair.
-		
-		// This is the intermediate rolling
+		// Intermediate rolls
 		for (GameEngineCallback callback : this.callbacks) {
 			for(int i = 0; i < FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Handles GUI animation
