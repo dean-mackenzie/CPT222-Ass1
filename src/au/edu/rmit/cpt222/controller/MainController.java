@@ -39,7 +39,9 @@ public class MainController {
 	}
 	
 	public void betAndRoll(int bet) {
-		//Place bet
+		//Place bet on a per player basis
+		// NOTE: this loop isn't needed for Assignment 1,
+		// but may be needed for Assignment 2
 		for (Player player : this.engine.getAllPlayers()) {
 			try {
 				player.placeBet(bet);
@@ -47,12 +49,14 @@ public class MainController {
 				new Thread() {
 					public void run() {
 						MainController.this.engine.rollPlayer(
-								player, INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
+								player, INITIAL_DELAY, FINAL_DELAY,
+								DELAY_INCREMENT);
 						MainController.this.engine.calculateResult();
 					}
 				}.start();
 			} catch (InsufficientFundsException e) {
-				this.mw.displayWarning("Insufficient funds to place a bet of that size.");
+				this.mw.displayWarning("Insufficient funds to place a " +
+					"bet of that size.");
 			}
 		}
 	}

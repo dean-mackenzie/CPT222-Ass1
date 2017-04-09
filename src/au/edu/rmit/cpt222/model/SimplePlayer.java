@@ -7,7 +7,6 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
 public class SimplePlayer implements Player {
-	//Variables
 	private String playerID;
 	private String playerName;
 	private int points;
@@ -15,14 +14,12 @@ public class SimplePlayer implements Player {
 	private DicePair playerDice;
 	private GameStatus status;
 			
-	//Constructor
 	public SimplePlayer(String playerID, String playerName, int points) {
 		this.playerID = playerID;
 		this.playerName = playerName;
 		this.points = points;
 	}
 	
-	//Methods
 	public String getPlayerId() {
 		return playerID;
 	}

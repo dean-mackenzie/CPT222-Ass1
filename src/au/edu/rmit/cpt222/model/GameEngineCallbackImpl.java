@@ -15,7 +15,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	protected Logger logger = Logger.getLogger("Test");
 
 	public void gameResult(Player player, GameStatus result, GameEngine engine) {
-		this.logger.log(Level.INFO, "Game result: " + player.getPlayerName()
+		this.logger.log(Level.INFO, "Game Result: " + player.getPlayerName()
 				+ " has " + result);
 	}
 	
